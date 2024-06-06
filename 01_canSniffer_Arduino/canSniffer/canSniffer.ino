@@ -77,14 +77,15 @@ void printPacket(packet_t * packet) {
   if (packet->id & CAN_EFF_FLAG)
   {
     sprintf(buf, "%c%08X", cmd, packet->id & CAN_EFF_MASK);
-    sprintf(buf, "%d", packet->dlc);
   }
   else
   {
     sprintf(buf, "%c%03X", cmd | 0x20, packet->id & CAN_SFF_MASK);
-    sprintf(buf, "%d", packet->dlc);
   }
-
+  char dlc;
+  itoa(packet->dlc, &dlc, 10);
+  strcat(buf, &dlc);
+  
   ptr = strlen(buf);
 
   for (i = 0; i < packet->dlc; i++)
